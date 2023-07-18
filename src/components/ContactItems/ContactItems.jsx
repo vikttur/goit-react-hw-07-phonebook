@@ -14,7 +14,7 @@ export default function ContactItems({ id, name, phone }) {
     <li className={css.item}>
       <span className={css.marker}></span>
       <p className={css.label}>{name}:</p>
-      <p className={css.quantity}>{phone}</p>
+      <p className={css.number}>{phone}</p>
       <button
         type="button"
         className={css.button}

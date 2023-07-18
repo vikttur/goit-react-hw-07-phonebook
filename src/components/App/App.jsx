@@ -7,6 +7,7 @@ import {
   selectError,
 } from 'redux/selectors';
 import Section from '../Section/Section';
+import Loader from '../Loader/Loader';
 import ContactForm from '../ContactForm/ContactForm';
 import Filter from '../Filter/Filter';
 import ContactList from '../ContactList/ContactList';
@@ -29,7 +30,8 @@ export default function App() {
       </Section>
 
       <Section title="Contacts">
-        {isLoading && !error && <b>Request in progress...</b>}
+        {isLoading && !error && <Loader />}
+        {/* {isLoading && !error && <b>Request in progress...</b>} */}
         {contacts ? (
           <>
             <Filter />
