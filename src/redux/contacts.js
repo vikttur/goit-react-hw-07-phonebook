@@ -1,43 +1,64 @@
-import { createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchContacts, addContact, deleteContact, toggleCompleted } from 'redux/operations';
+
+const handlePending = state => {
+  state.isLoading = true;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const contactsInitialState = {
-    items: [],
-    isLoading: false,
-    error: null,
-  };
+	items: [],
+	isLoading: false,
+	error: null,
+};
 	
 const contactsSlice = createSlice({
   name: 'contacts',
 	initialState: contactsInitialState,
 	
-  reducers: {
-		addContact: {
-			reducer(state, action) {
-				console.log(state);
-				console.log(action);
-				console.log(action.payload);
-
-        return [...state, action.payload];
-      },
-			prepare(name, phone) {
-				console.log( name);
-				console.log(phone);
-
-        return {
-          payload: {
-            // id: nanoid(),
-            name,
-            phone,
-          },
-        };
-      },
-		},
-		
-    deleteContact(state, action) {
-      return state.filter(contact => contact.id !== action.payload);
+  extraReducers: {
+    [fetchContacts.pending]: handlePending,
+    [fetchContacts.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items = action.payload;
     },
+		[fetchContacts.rejected]: handleRejected,
+		
+    [addContact.pending]: handlePending,
+    [addContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items.push(action.payload);
+    },
+		[addContact.rejected]: handleRejected,
+		
+    [deleteContact.pending]: handlePending,
+    [deleteContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const index = state.items.findIndex(
+        task => task.id === action.payload.id
+      );
+      state.items.splice(index, 1);
+    },
+		[deleteContact.rejected]: handleRejected,
+		
+    [toggleCompleted.pending]: handlePending,
+    [toggleCompleted.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const index = state.items.findIndex(
+        task => task.id === action.payload.id
+      );
+      state.items.splice(index, 1, action.payload);
+    },
+    [toggleCompleted.rejected]: handleRejected,
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
-export const { addContact, deleteContact } = contactsSlice.actions;

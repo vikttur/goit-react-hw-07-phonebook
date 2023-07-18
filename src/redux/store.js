@@ -5,6 +5,6 @@ import { filterReducer } from './filter';
 export const store = configureStore({
   reducer: {
     contacts: contactsReducer,
-    filter: filterReducer,
+    filters: filterReducer,
   },
 });

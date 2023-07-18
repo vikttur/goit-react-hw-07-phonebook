@@ -6,15 +6,12 @@ import css from './ContactList.module.css';
 export default function ContactList() {
   const allContacts = useSelector(selectContactsList);
   const filter = useSelector(selectContactsFilter);
-  // console.log(allContacts);
-  // console.log(filter);
+
   const filteredContacts = [
     ...allContacts.filter(contact =>
       contact.name.toLowerCase().includes(filter)
     ),
   ];
-
-  // console.log(filteredContacts);
 
   return (
     <ul className={css.list}>

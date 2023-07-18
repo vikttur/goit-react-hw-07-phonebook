@@ -20,9 +20,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchContacts());
-    // console.log(dispatch(fetchContacts()));
   }, [dispatch]);
-  // console.log(contacts);
 
   return (
     <>
