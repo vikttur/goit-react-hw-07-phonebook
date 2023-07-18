@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setContactsFilter } from 'redux/filter';
-import { getContactsFilter } from 'redux/selectors';
+import { selectContactsFilter } from 'redux/selectors';
 import css from './Filter.module.css';
 
 export default function Filter() {
   const dispatch = useDispatch();
-  const filter = useSelector(getContactsFilter);
+  const filter = useSelector(selectContactsFilter);
 
   const onHandlerFilterChange = ({ currentTarget: { value } }) => {
     const normalizeText = value.toLowerCase().trim();

@@ -13,5 +13,3 @@ root.render(
 		</Provider>
   </React.StrictMode>
 )
-
-// https://64b58d89f3dbab5a95c77653.mockapi.io/api/v1/contacts

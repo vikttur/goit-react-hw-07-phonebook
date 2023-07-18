@@ -1,13 +1,28 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
+import {
+  selectContactsList,
+  selectIsLoading,
+  selectError,
+} from 'redux/selectors';
 import Section from '../Section/Section';
 import ContactForm from '../ContactForm/ContactForm';
 import Filter from '../Filter/Filter';
-import { useSelector } from 'react-redux';
-import { getContactsList } from 'redux/selectors';
 import ContactList from '../ContactList/ContactList';
 import Notification from '../Notification/Notification';
 
 export default function App() {
-  const contacts = useSelector(getContactsList);
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContactsList);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+    // console.log(dispatch(fetchContacts()));
+  }, [dispatch]);
+  // console.log(contacts);
 
   return (
     <>
@@ -16,7 +31,8 @@ export default function App() {
       </Section>
 
       <Section title="Contacts">
-        {contacts.length !== 0 ? (
+        {isLoading && !error && <b>Request in progress...</b>}
+        {contacts ? (
           <>
             <Filter />
             <ContactList />
